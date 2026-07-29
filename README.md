@@ -1,183 +1,194 @@
-# 📦 Inventory Tracker (SQL + Python CLI)
+# 📦 Inventory SQL Tracker
 
-An intermediate-level inventory management system: a **PostgreSQL** database
-(with a view and an auto-update trigger) driven by a **Python command-line
-application**. Built as part of an AICTE Summer Internship.
-
-## Made By:
-**Candidate Name:** Aditya Ranjan
-**Intern ID:** CITS83
-**Selected For:** Full Stack Web Development
-**Organization:** Codtech IT Solutions Private Limited
-**Duration:** 8 Weeks
-**Internship Period:** 17 May 2026 - 12 July 2026
-
-
-![Python](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)
-![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-
+A full-stack inventory management application built with React and MySQL that helps businesses efficiently manage products, suppliers, customers, purchases, and sales. The system automates inventory tracking, generates business reports, and provides an intuitive user interface for inventory operations.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Features
+
+- Dashboard with inventory overview
+- Product Management (Add, Edit, Delete, View)
+- Supplier Management
+- Customer Management
+- Purchase Tracking
+- Sales Tracking
+- Automatic Stock Updates
+- Low Stock Alerts
+- Search & Filter Products
+- Inventory Reports
+- Sales Analytics
+- Best Selling Products
+- Responsive User Interface
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React.js
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MySQL
+
+### Tools
+- MySQL Workbench
+- Postman
+- Git
+- GitHub
+- VS Code
+
+---
+
+## 📂 Project Structure
 
 ```
-inventory-tracker-sql/
-├── sql/
-│   ├── 01_schema.sql        # Table definitions, keys, constraints, indexes
-│   ├── 02_sample_data.sql   # Sample categories, suppliers, products, transactions
-│   └── 03_queries.sql       # Reference queries + current_stock_view + trg_update_stock trigger
-├── app/
-│   ├── __init__.py
-│   ├── db.py                 # PostgreSQL connection (reads .env)
-│   ├── inventory.py           # Data-access layer (all SQL used by the app)
-│   └── cli.py                 # Menu-driven command line interface
-├── main.py                   # Entry point -> `python main.py`
-├── requirements.txt
-├── .env.example               # Template for DB credentials
-├── LICENSE
-├── .gitignore
+Inventory-SQL-Tracker
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── backend/
+│   ├── routes/
+│   ├── controllers/
+│   ├── models/
+│   ├── config/
+│   └── server.js
+│
+├── database/
+│   ├── schema.sql
+│   ├── sample_data.sql
+│   └── queries.sql
+│
 └── README.md
 ```
 
-## 🧩 Entity Relationship Diagram
+---
 
-```mermaid
-erDiagram
-    CATEGORIES ||--o{ PRODUCTS : contains
-    SUPPLIERS ||--o{ PRODUCTS : supplies
-    PRODUCTS ||--o{ INVENTORY_TRANSACTIONS : has
+## 🗄️ Database Design
 
-    CATEGORIES {
-        int category_id PK
-        varchar category_name
-    }
-    SUPPLIERS {
-        int supplier_id PK
-        varchar supplier_name
-        varchar contact_email
-        varchar contact_phone
-    }
-    PRODUCTS {
-        int product_id PK
-        varchar product_name
-        int category_id FK
-        int supplier_id FK
-        numeric unit_price
-        int quantity_in_stock
-        int reorder_level
-        timestamp created_at
-    }
-    INVENTORY_TRANSACTIONS {
-        int transaction_id PK
-        int product_id FK
-        varchar transaction_type
-        int quantity
-        timestamp transaction_date
-        varchar remarks
-    }
-```
-*(Renders automatically on GitHub.)*
+The database is normalized up to **Third Normal Form (3NF)**.
 
-## ⚙️ Tech Stack
+### Main Tables
 
-- **Database:** PostgreSQL 13+
-- **Backend:** Python 3.9+, `psycopg2`, `python-dotenv`
-- **Interface:** Command-line (menu-driven)
+- Products
+- Suppliers
+- Customers
+- Sales
+- Sale_Items
+- Purchases
+- Purchase_Items
 
-## 🚀 Getting Started
+Relationships are maintained using Primary Keys and Foreign Keys.
 
-### 1. Clone the repo
-```bash
-git clone https://github.com/<your-username>/inventory-tracker-sql.git
-cd inventory-tracker-sql
-```
+---
 
-### 2. Create the database and load schema + sample data
-```bash
-createdb inventory_tracker
-psql -d inventory_tracker -f sql/01_schema.sql
-psql -d inventory_tracker -f sql/02_sample_data.sql
-psql -d inventory_tracker -f sql/03_queries.sql
-```
+## ⚙️ Core Functionalities
 
-### 3. Set up the Python environment
-```bash
-python -m venv venv
-source venv/bin/activate      # on Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+### Product Management
+- Add new products
+- Update product details
+- Delete discontinued products
+- View product inventory
 
-### 4. Configure your database credentials
-```bash
-cp .env.example .env
-# then edit .env with your actual PostgreSQL host/user/password
-```
+### Inventory Management
+- Track stock quantity
+- Automatic stock updates
+- Low stock monitoring
 
-### 5. Run the app
-```bash
-python main.py
-```
+### Purchase Management
+- Record purchases from suppliers
+- Increase inventory automatically
 
-You'll see a menu like this:
-```
-==================================================
-   📦  INVENTORY TRACKER
-==================================================
- 1. View all products
- 2. Add a new product
- 3. Record stock IN (add stock)
- 4. Record stock OUT (remove stock)
- 5. Low stock alert
- 6. Search product by name
- 7. View transaction history for a product
- 8. Inventory value report
- 9. Add category
-10. Add supplier
- 0. Exit
-==================================================
-```
+### Sales Management
+- Record customer sales
+- Reduce inventory automatically
+- Maintain sales history
 
-## ✨ Features
+### Business Reports
+- Current Inventory
+- Monthly Sales
+- Total Revenue
+- Best Selling Products
+- Low Stock Products
+- Inventory Value
 
-**Database layer**
-- Normalized schema with primary/foreign keys and `CHECK` constraints
-- Full stock movement history instead of just a running total
-- `current_stock_view` for quick low-stock reporting
-- `trg_update_stock` trigger — automatically keeps `quantity_in_stock` in sync
-  whenever a transaction is inserted (the app relies on this instead of
-  manually updating stock, so the database stays consistent no matter what
-  inserts the transaction)
-- Indexes on foreign key columns for performance
+---
 
-**Application layer**
-- Clean separation of concerns: `db.py` (connection) → `inventory.py`
-  (data access / SQL) → `cli.py` (user interface)
-- Parameterized queries throughout — no string-built SQL, protecting against
-  SQL injection
-- Credentials loaded from environment variables via `.env` (never hard-coded,
-  never committed)
-- Graceful error handling for bad input, invalid IDs, and constraint
-  violations (e.g. trying to remove more stock than available)
-- Menu-driven CLI covering full CRUD + reporting: add products/categories/
-  suppliers, record stock movements, search, low-stock alerts, transaction
-  history, and inventory valuation
+## 💡 SQL Concepts Used
 
-## 🗺️ Roadmap / Possible Extensions
+- Database Design
+- ER Modeling
+- Normalization (3NF)
+- Primary Keys
+- Foreign Keys
+- Constraints
+- Joins
+- Aggregate Functions
+- GROUP BY
+- HAVING
+- Subqueries
+- Common Table Expressions (CTEs)
+- Window Functions
+- Views
+- Stored Procedures
+- Triggers
+- Indexing
 
-- [ ] Add a `warehouses` table for multi-location stock
-- [ ] Build a web front end (Flask/Django) on top of the same `app/inventory.py` layer
-- [ ] Add role-based access (admin vs staff)
-- [ ] Export reports to CSV/PDF
-- [ ] Dockerize with a `docker-compose.yml` for one-command setup
-- [ ] Add automated tests (pytest) for the data-access layer
+---
 
-## 📄 License
+## 🔄 Application Workflow
 
-This project is licensed under the [MIT License](LICENSE).
+1. User logs into the application.
+2. Products and suppliers are managed through the React interface.
+3. Purchases increase stock in the database.
+4. Sales reduce stock automatically.
+5. Reports and analytics are generated using SQL queries.
+6. The dashboard displays updated inventory information in real time.
 
-## 🙋 Author
+---
 
-Built as part of the **Codtech Summer Internship** program.
+## 🎯 Learning Outcomes
+
+This project helped me understand:
+
+- Full-stack application development
+- React component architecture
+- REST API development
+- MySQL database design
+- SQL query optimization
+- Database normalization
+- Inventory management workflows
+- Business analytics using SQL
+
+---
+
+## 🚀 Future Improvements
+
+- JWT Authentication
+- Role-Based Access Control
+- Barcode Scanner Integration
+- Email Notifications for Low Stock
+- Export Reports to Excel/PDF
+- Charts & Analytics Dashboard
+- Cloud Deployment
+
+---
+
+## 👨‍💻 Author
+
+**Aman Rauniyar**
+
+B.Tech, Computer Science & Engineering
+
+NIT Patna
+
+GitHub: https://github.com/AMAN-7779
