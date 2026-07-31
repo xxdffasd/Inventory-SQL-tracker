@@ -4,6 +4,17 @@ A full-stack inventory management application built with React and MySQL that he
 
 ---
 
+## 📋 Internship Information
+
+This project has been developed as part of the **Full Stack Web Development Internship** at **Codtech IT Solutions Private Limited**.
+
+- **Organization:** Codtech IT Solutions Private Limited
+- **Internship Domain:** Full Stack Web Development
+- **Intern ID:** **CITS3407**
+- **Duration:** 8 Weeks
+
+---
+
 ## 🚀 Features
 
 - Dashboard with inventory overview
