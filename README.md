@@ -10,8 +10,8 @@ This project has been developed as part of the **Full Stack Web Development Inte
 
 - **Organization:** Codtech IT Solutions Private Limited
 - **Internship Domain:** Full Stack Web Development
-- **Intern ID:** **CITS3407**
-- **Duration:** 8 Weeks
+- **Intern ID:** **CITS6692**
+- **Duration:** 6 Weeks
 
 ---
 
@@ -196,10 +196,10 @@ This project helped me understand:
 
 ## 👨‍💻 Author
 
-**Aman Rauniyar**
+**Md Raghib Akhtar**
 
 B.Tech, Computer Science & Engineering
 
 NIT Patna
 
-GitHub: https://github.com/AMAN-7779
+GitHub: https://github.com/xxdffasd
